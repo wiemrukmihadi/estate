@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <!-- Demo record for estate.property -->
+        <record id="demo_property_1" model="estate.property">
+            <field name="name">Beautiful Villa</field>
+            <field name="description">A stunning villa with a sea view.</field>
+            <field name="expected_price">450000</field>
+            <field name="postcode">10001</field>
+            <field name="state">new</field>
+            <field name="garden_orientation">north</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,10 @@
+<odoo>
+    <menuitem id="root_level_main" name="EState Management" action="estate_property_action">
+        <menuitem id="root_level_offer" name="Offer" action="estate_property_offer_action" />
+        <menuitem id="second_level_setting" name="Setting">
+            <menuitem id="third_level2" name="Property Type" action="estate_property_type_action"/>
+            <menuitem id="third_level4" name="Property Tag" action="estate_property_tag_action"/>
+        </menuitem>
+    </menuitem>
+    
+</odoo>
