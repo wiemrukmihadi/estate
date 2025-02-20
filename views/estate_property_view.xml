@@ -28,7 +28,9 @@
         <field name="arch" type="xml">
             <form>
                <header>
-                    <field name="state" widget="statusbar" />
+                    <button name="action_sold" invisible="state in('sold', 'canceled')" string="Sold" type="object" class="btn-primary" />
+                    <button name="action_cancel" invisible="state in('sold', 'canceled')" string="Cancel" type="object" class="btn-secondary"/>
+                    <field name="state" widget="statusbar" options="{'clickable': True}" readonly="state in('sold', 'canceled')"/>
                </header>
                <sheet>
                     <div class="oe_title">
@@ -36,50 +38,50 @@
                             <label for="name" />
                         </div>
                         <h1 class="mb32">
-                            <field name="name" class="mb16" />
+                            <field name="name" class="mb16" readonly="state in('sold', 'canceled')" />
                         </h1>
                     </div>
                      <group>
-                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" readonly="state in('sold', 'canceled')"/>
                     </group>
                      <group>
-                        <field name="property_type_id" />
+                        <field name="property_type_id" readonly="state in('sold', 'canceled')"/>
                     </group>
                     <group>
                         <!-- Left Column -->
                         <group>
                             
-                            <field name="expected_price"/>
-                            <field name="selling_price"/>
-                            <field name="best_offer"/>
+                            <field name="expected_price" readonly="state in('sold', 'canceled')"/>
+                            <field name="selling_price" readonly="state in('sold', 'canceled')"/>
+                            <field name="best_offer" readonly="state in('sold', 'canceled')"/>
                         </group>
                         <!-- Right Column -->
                         <group>
-                            <field name="postcode"/>
-                            <field name="date_availability"/>
+                            <field name="postcode" readonly="state in('sold', 'canceled')"/>
+                            <field name="date_availability" readonly="state in('sold', 'canceled')"/>
                         </group>
                     </group>
                     <notebook>
                         <page string="Description">
                             <group>
                                 <group>
-                                    <field name="description" />
-                                    <field name="bedrooms"/>
-                                    <field name="living_area"/>
-                                    <field name="garden_area" />
-                                    <field name="total_area" />
-                                    <field name="garden"/>
+                                    <field name="description" readonly="state in('sold', 'canceled')" />
+                                    <field name="bedrooms" readonly="state in('sold', 'canceled')" />
+                                    <field name="living_area" readonly="state in('sold', 'canceled')" />
+                                    <field name="garden_area" readonly="state in('sold', 'canceled')" />
+                                    <field name="total_area" readonly="state in('sold', 'canceled')" />
+                                    <field name="garden" readonly="state in('sold', 'canceled')"/>
                                 </group>
                                 <group>  
-                                    <field name="facades"/>
-                                    <field name="garage"/>
-                                    <field name="garden_orientation" />
+                                    <field name="facades" readonly="state in('sold', 'canceled')"/>
+                                    <field name="garage" readonly="state in('sold', 'canceled')"/>
+                                    <field name="garden_orientation" readonly="state in('sold', 'canceled')"/>
                                 </group>
                             </group>
                         
                         </page>
                         <page string="Offer">
-                            <field name="offer_ids">
+                            <field name="offer_ids" readonly="state in('sold', 'canceled')">
                                 <tree decoration-danger="status == 'refused'" decoration-success="status == 'accepted'">
                                     <field name="property_id"/>
                                     <field name="partner_id"/>

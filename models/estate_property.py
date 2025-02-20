@@ -92,6 +92,14 @@ class EstateProperty(models.Model):
             if estate.selling_price < 10000000:
                 raise ValidationError(_("Selling price can not be lower than 10.000.000,00"))
 
+    def action_sold(self):
+        if "sold" in self.state:
+            raise UserError(_("Already accepted by partner"))
+        self.state = "sold"
+
+    def action_cancel(self):
+        self.state = "canceled"
+
     garden_orientation = fields.Selection([
         ('north', 'North'),
         ('south', 'South'),
