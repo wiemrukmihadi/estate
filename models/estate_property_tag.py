@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import api, models, fields
 
 class EstatePropertyTag(models.Model):
     _name = 'estate.property.tag'
@@ -7,4 +7,4 @@ class EstatePropertyTag(models.Model):
     _order = "name desc"
 
     _sql_constraints = [('unique_tag_name', 'UNIQUE(name)', 'Tag name must be unique')]
-    color = fields.Integer()
+    color = fields.Integer(default=0)

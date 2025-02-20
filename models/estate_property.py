@@ -51,17 +51,34 @@ class EstateProperty(models.Model):
     def _compute_total_area(self):
         for property in self:
             property.total_area = property.living_area + property.garden_area
+
+    @api.onchange('garden_area')
+    def _onchange_garden_area(self):
+        for estate in self:
+            if estate.garden_area <= 0:
+                estate.garden = False
+                estate.garden_orientation = 'north'
+            else:
+                estate.garden = True
+
     @api.onchange('garden')
     def _onchange_garden(self):
         for estate in self:
             if not estate.garden:
                 estate.garden_area = 0
+                estate.garden_orientation = 'north'
     @api.onchange('date_availability')
     def _onchange_date_availability(self):
         for estate in self:
             if estate.date_availability:
                 if estate.date_availability < fields.Date.today():
-                    raise ValidationError(_("Date availability can not in the past"))
+                    # raise ValidationError(_("Date availability set in the past"))
+                    return{
+                        "warning": {
+                            "title": _("Warning"),
+                            "message": _('Date availability set in the past')
+                        }
+                    }
                     
             # return{
             #     "warning": {

@@ -5,6 +5,7 @@ from odoo.exceptions import UserError
 class EstatePropertyOffer(models.Model):
     _name = 'estate.property.offer'
     _description = 'Estate Property Offer'
+    _rec_name = 'property_id'
 
     price = fields.Float()
     status = fields.Selection(
@@ -25,18 +26,23 @@ class EstatePropertyOffer(models.Model):
 
     @api.depends('validity')
     def _compute_date_deadline(self):
-        for property in self:
-            property.date_deadline = fields.Date.today() + relativedelta(days=property.validity)
+        for offer in self:
+            date = offer.create_date.date() if offer.create_date else fields.Date.today()
+            offer.date_deadline = date + relativedelta(days=offer.validity)
+            # offer.date_deadline = fields.Date.today() + relativedelta(days=offer.validity)
     @api.depends('date_deadline')        
     def _inverse_date_deadline(self):
-        for property in self:
-            property.validity = (property.date_deadline - fields.Date.today()).days
+        for offer in self:
+            date = offer.create_date.date() if offer.create_date else fields.Date.today()
+            offer.validity = (offer.date_deadline - date).days
+            # property.validity = (property.date_deadline - fields.Date.today()).days
     
     def action_accept(self):
         self.ensure_one()
         if "accepted" in self.property_id.offer_ids.mapped('status'):
             raise UserError(_("Already accepted by partner"))
         self.status = "accepted"
+        self.property_id.state = 'accepted'
         self.property_id.selling_price = self.price
 
     def action_refuse(self):
